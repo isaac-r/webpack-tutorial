@@ -4,9 +4,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: "./src/index.js",
     plugins: [new HtmlWebpackPlugin({
-        template: "./src/template.html",
-        inject: 'body'
+        template: "./src/template.html"
     })],
+    output: {
+        assetModuleFilename: "imgs/[name].[hash].[ext]"
+    },
     module: {
         rules: [
             {
@@ -17,6 +19,22 @@ module.exports = {
                     "sass-loader" // 1. Turns sass into css
                 ],
             },
+            {
+                test: /\.html$/,
+                use: ["html-loader"]
+            },
+            {
+                // test: /\.(svg|png|jpg|gif)$/,
+                // use: {
+                //     loader: "file-loader",
+                //     options: {
+                //         name: "[name].[hash].[ext]",
+                //         outputPath: "imgs"
+                //     }
+                // }
+                test: /\.(svg|png|jpg|gif)$/,
+                type: 'asset/resource'
+            }
         ]
     }
 };
